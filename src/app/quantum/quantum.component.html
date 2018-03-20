@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row" id="top">
+    <div class="col-md-2">
+      <div class="list-group">
+        <a 
+          class="list-group-item list-group-item-action" 
+          routerLinkActive="active"
+          routerLink="info">
+          Info
+        </a>
+        <a
+          class="list-group-item list-group-item-action" 
+          routerLinkActive="active"
+          routerLink="type1">
+          Type 1
+        </a>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

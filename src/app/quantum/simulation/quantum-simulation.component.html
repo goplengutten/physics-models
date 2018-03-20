@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="dropdown text-center">
+        
+        <span>Current Potential: <strong>{{ potential }}</strong></span>
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Potentials
+        </button>
+        <br>
+        <div style="cursor:pointer;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="onSetPotential('HO')">Harmonic oscillator (HO)</a>
+          <a class="dropdown-item" (click)="onSetPotential('DW')">Double well (DW)</a>
+          <a class="dropdown-item" (click)="onSetPotential('HO')">Something else here</a>
+        </div>
+      </div>
+      <button style="margin-top: 10px;" class="btn btn-primary" (click)="onGetSimulation()">Simulate</button>
+      <button style="margin-top: 10px" *ngIf="frames && frames.length > 0" class="btn btn-primary" (click)="onRestartAnim()">Restart</button>  
+    </div>
+    <div class="col-md-5">
+      <div *ngIf="potential">
+        <div class="row">
+          <div class="col-md-2">
+            <strong>L<sub>x</sub></strong>
+            <br>
+            <span>{{ params.lx }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam('lx', 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam('lx', 'down')">-</button>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <strong>N<sub>grid</sub></strong>
+            <br>
+            <span>{{ params.ng }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam('ng', 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam('ng', 'down')">-</button>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <strong>N<sub>states</sub></strong>
+            <br>
+            <span>{{ params.nstates }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam('nstates', 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam('nstates', 'down')">-</button>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <strong>T<sub>final</sub></strong>
+            <br>
+            <span>{{ params.tfinal }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam('tfinal', 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam('tfinal', 'down')">-</button>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <strong>&Delta;t</strong>
+            <br>
+            <span>{{ params.dt.toFixed(2) }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam('dt', 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam('dt', 'down')">-</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div *ngIf="potential === 'HO' || potential === 'DW'">
+            <strong>&omega;</strong>
+            <br>
+            <span>{{ params.omega.toFixed(2) }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam('omega', 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam('omega', 'down')">-</button>
+            </div>
+          </div>
+          <div *ngIf="potential === 'DW'">
+            <strong>R</strong>
+            <br>
+            <span>{{ params.R.toFixed(1) }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam('R', 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam('R', 'down')">-</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div *ngFor="let coeff of params.coeffs; index as i">
+          <div class="col-md-4">
+            <strong>c{{ i + 1 }}</strong>
+            <br>
+            <span>{{ coeff.toFixed(1) }}</span>
+            <br>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-primary" (click)="onAdjustParam(i, 'up')">+</button>
+              <button class="btn btn-primary" (click)="onAdjustParam(i, 'down')">-</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <div style="height: 500px; width: 500px;" id="plot"></div>
+  <div style="height: 500px; width: 500px;" id="animation"></div>
+</div>
