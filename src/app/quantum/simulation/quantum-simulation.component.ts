@@ -67,86 +67,59 @@ export class QuantumSimulationComponent implements OnInit {
     }
   }
 
-  onAdjustParam(type, direction){
-    console.log(typeof type)
-    if(type === "lx"){
-      if(direction === "up"){
-        this.params.lx += 1
-      }else{
-        if(this.params.lx >= 2){
-          this.params.lx -= 1 
-        }
-      }
-    }else if(type === "ng"){
-      if(direction === "up"){
-        if(this.params.ng <= 2000){
-          this.params.ng += 25
-        }
-      }else{
-        if(this.params.ng >= 125){
-          this.params.ng -= 25
-        }
-      }
-    }else if(type === "nstates"){
-      if(direction === "up"){
-        if(this.params.nstates < 9){
-          this.params.nstates += 1
-          this.params.coeffs.push(0)
-        }
-      }else{
-        if(this.params.nstates > 1){
-          this.params.nstates -= 1
-          this.params.coeffs.pop()
-        }
-      }
-    }else if(type === "tfinal"){
-      if(direction === "up"){
-        if(this.params.tfinal < 100){
-          this.params.tfinal += 0.25
-        }
-      }else{
-        if(this.params.tfinal > 0.25){
-          this.params.tfinal -= 0.25
-        }
-      }
-    }else if(type === "dt"){
-      if(direction === "up"){
-        if(this.params.dt < 1){
-          this.params.dt += 0.01
-        }
-      }else{
-        if(this.params.dt > 0.01){
-          this.params.dt -= 0.01
-        }
-      }
-    }else if(type === "omega"){
-      if(direction === "up"){
-        if(this.params.omega < 10){
-          this.params.omega += 0.05
-        }
-      }else{
-        if(this.params.omega > 0.05){
-          this.params.omega -= 0.05
-        }
-      }
-    }else if(type === "R"){
-      if(direction === "up"){
-        if(this.params.R < 10){
-          this.params.R += 0.1
-        }
-      }else{
-        if(this.params.R > 0.1){
-          this.params.R -= 0.1
-        }
-      }
-    }else if(typeof type === "number"){
-      if(direction === "up"){
-        this.params.coeffs[type] += 0.1
-      }else{
-        this.params.coeffs[type] -= 0.1
-      }
+  onLxUp(){
+    this.params.lx += 1
+  }
+  onLxDown(){
+    this.params.lx -= this.params.lx > 1 ? 1 : 0
+  }
+  onNgUp(){
+    this.params.ng += this.params.ng < 2000 ? 25 : 0
+  }
+  onNgDown(){
+    this.params.ng -= this.params.ng > 100 ? 25 : 0
+  }
+  onNstatesUp(){
+    if(this.params.nstates < 11){
+      this.params.nstates += 1 
+      this.params.coeffs.push(0)
     }
-    
+  }
+  onNstatesDown(){
+    if(this.params.nstates > 1){
+      this.params.nstates -= 1 
+      this.params.coeffs.pop(0)
+    }
+  }
+  onTfinalUp(){
+    this.params.tfinal += this.params.tfinal < 100 ? 0.25 : 0
+  }
+  onTfinalDown(){
+    this.params.tfinal -= this.params.tfinal > 5 ? 0.25 : 0
+  }
+  onDtUp(){
+    this.params.dt += this.params.dt < 1 ? 0.01 : 0
+  }
+  onDtDown(){
+    this.params.dt -= this.params.dt > 0.02 ? 0.01 : 0
+  }
+  onOmegaUp(){
+    this.params.omega += this.params.omega < 10 ? 0.05 : 0
+  }
+  onOmegaDown(){
+    this.params.omega -= this.params.omega > 0.05 ? 0.05 : 0
+  }
+  onRUp(){
+    this.params.R += this.params.R < 10 ? 0.05 : 0
+  }
+  onRDown(){
+    this.params.R -= this.params.R > 0.1 ? 0.05 : 0
+  }
+  onCUp(i){
+    this.params.coeffs[i] += 0.1
+  }
+  onCDown(i){
+    this.params.coeffs[i] -= 0.1
   }
 
   onGetSimulation(){

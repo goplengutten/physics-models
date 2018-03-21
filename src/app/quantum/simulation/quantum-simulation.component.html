@@ -1,127 +1,94 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-3">
-      <div class="dropdown text-center">
-        
-        <span>Current Potential: <strong>{{ potential }}</strong></span>
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Potentials
-        </button>
-        <br>
-        <div style="cursor:pointer;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" (click)="onSetPotential('HO')">Harmonic oscillator (HO)</a>
-          <a class="dropdown-item" (click)="onSetPotential('DW')">Double well (DW)</a>
-          <a class="dropdown-item" (click)="onSetPotential('HO')">Something else here</a>
-        </div>
-      </div>
-      <button style="margin-top: 10px;" class="btn btn-primary" (click)="onGetSimulation()">Simulate</button>
-    </div>
-    <div class="col-md-5">
-      <div *ngIf="potential">
-        <div class="row">
-          <div class="col-md-2">
-            <strong>L<sub>x</sub></strong>
-            <br>
-            <span>{{ params.lx }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam('lx', 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam('lx', 'down')">-</button>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <strong>N<sub>grid</sub></strong>
-            <br>
-            <span>{{ params.ng }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam('ng', 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam('ng', 'down')">-</button>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <strong>N<sub>states</sub></strong>
-            <br>
-            <span>{{ params.nstates }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam('nstates', 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam('nstates', 'down')">-</button>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <strong>T<sub>final</sub></strong>
-            <br>
-            <span>{{ params.tfinal }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam('tfinal', 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam('tfinal', 'down')">-</button>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <strong>&Delta;t</strong>
-            <br>
-            <span>{{ params.dt.toFixed(2) }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam('dt', 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam('dt', 'down')">-</button>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div *ngIf="potential === 'HO' || potential === 'DW'">
-            <strong>&omega;</strong>
-            <br>
-            <span>{{ params.omega.toFixed(2) }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam('omega', 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam('omega', 'down')">-</button>
-            </div>
-          </div>
-          <div *ngIf="potential === 'DW'">
-            <strong>R</strong>
-            <br>
-            <span>{{ params.R.toFixed(1) }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam('R', 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam('R', 'down')">-</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="row">
-        <div *ngFor="let coeff of params.coeffs; index as i">
-          <div class="col-md-4">
-            <strong>c{{ i + 1 }}</strong>
-            <br>
-            <span>{{ coeff.toFixed(1) }}</span>
-            <br>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-primary" (click)="onAdjustParam(i, 'up')">+</button>
-              <button class="btn btn-primary" (click)="onAdjustParam(i, 'down')">-</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
     <div class="col-md-6">
-      <h3>Eigenfunctions</h3>
+      <h3>
+        Eigenfunctions
+        <div class="dropdown float-right">
+
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Potentials: ({{ potential }})
+          </button>
+          <br>
+          <div style="cursor:pointer;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="onSetPotential('HO')">Harmonic oscillator (HO)</a>
+            <a class="dropdown-item" (click)="onSetPotential('DW')">Double well (DW)</a>
+            <a class="dropdown-item" (click)="onSetPotential('HO')">Something else here</a>
+          </div>
+        </div>
+      </h3>
       <hr>
       <div id="plot"></div>
     </div>
     <div class="col-md-6">
-      <h3>Time Evolution</h3>
+      <h3>Time Evolution <button class="btn btn-primary float-right" (click)="onGetSimulation()">Simulate</button></h3>
       <hr>
       <div id="animation"></div>
     </div>
   </div>
-    
+  <hr>
+  <div class="row">
+    <div class="col-md-2 offset-md-2 text-center">
+      <h5>L<sub>x</sub></h5>
+      <button class="btn btn-secondary btn-sm" (click)="onLxDown()">-</button>
+      <span>{{ params.lx }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onLxUp()">+</button>
+    </div>
+    <div class="col-md-2 text-center">
+      <h5>N<sub>grid</sub></h5>
+      <button class="btn btn-secondary btn-sm" (click)="onNgDown()">-</button>
+      <span>{{ params.ng }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onNgUp()">+</button>
+    </div>
+    <div class="col-md-2 text-center">
+      <h5>N<sub>states</sub></h5>
+      <button class="btn btn-secondary btn-sm" (click)="onNstatesDown()">-</button>
+      <span>{{ params.nstates }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onNstatesUp()">+</button>
+    </div>
+    <div class="col-md-2 text-center">
+      <h5>T<sub>final</sub></h5>
+      <button class="btn btn-secondary btn-sm" (click)="onTfinalDown()">-</button>
+      <span>{{ params.tfinal.toFixed(2) }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onTfinalUp()">+</button>
+    </div>
+    <div class="col-md-2 text-center">
+      <h5>&Delta;t</h5>
+      <button class="btn btn-secondary btn-sm" (click)="onDtDown()">-</button>
+      <span>{{ params.dt.toFixed(2) }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onDtUp()">+</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-2 text-center">
+      <strong>Potential Parameters</strong> 
+    </div>
+    <div *ngIf="potential === 'HO' || potential === 'DW'" class="col-md-2 text-center">
+      <h5>&omega;</h5>
+      <button class="btn btn-secondary btn-sm" (click)="onOmegaDown()">-</button>
+      <span>{{ params.omega.toFixed(2) }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onOmegaUp()">+</button>
+    </div>
+    <div *ngIf="potential === 'DW'" class="col-md-2 text-center">
+      <h5>R</h5>
+      <button class="btn btn-secondary btn-sm" (click)="onRDown()">-</button>
+      <span>{{ params.R.toFixed(2) }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onRUp()">+</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-2 text-center">
+      <strong>Coefficients</strong> 
+    </div>
+    <div *ngFor="let coeff of params.coeffs; index as i" class="col-md-2 text-center">
+      <h5>c{{ i + 1 }}</h5>
+      <button class="btn btn-secondary btn-sm" (click)="onCDown(i)">-</button>
+      <span>{{ coeff.toFixed(1) }}</span>
+      <button class="btn btn-secondary btn-sm" (click)="onCUp(i)">+</button>
+    </div>
+  </div>
+  <hr>
 </div>
+
+
