@@ -4,26 +4,27 @@ const spawn = require("child_process").spawn
 module.exports.simulateSystem = function(socket, planets){
   
   console.log("sim")
-  const calcuation = spawn("python", ["server/solar/solar_system.py", planets])
+  const simulation = spawn("python", ["server/solar/solar_system.py", planets])
   
-  calcuation.stdout.setEncoding("utf-8")
-  calcuation.stdout.on("data", (data) => {
+  simulation.stdout.setEncoding("utf-8")
+  simulation.stdout.on("data", (data) => {
     socket.emit("streaming info", data)
   })
 
-  calcuation.stderr.on("data", (data) => {
+  simulation.stderr.on("data", (data) => {
     console.log("err")
     console.log(`stderr: ${data}`)
   })
 
-  calcuation.on("close", (code) => {
+  simulation.on("close", (code) => {
     console.log("complete")
     socket.emit("complete")
   })
 }
 
-module.exports.fetchPlanets = function(socket){
-  let planets = require("./defined_planets")
-  planets = JSON.stringify(planets)
-  socket.emit("planets", planets)
+module.exports.fetchSystem = function(socket, name){
+  let systems = require("./defined_systems")
+  let system = systems.find((sys) => sys.name === name)
+  system = JSON.stringify(system)
+  socket.emit("system", system)
 }

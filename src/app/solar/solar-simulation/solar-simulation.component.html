@@ -1,18 +1,57 @@
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9">
-        <div id="animation"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div id="animation"></div>
+    </div>
+    <div *ngIf="planets" class="col-md-4">
+        <div class="dropdown float-right">
+            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Systems
+            </button>
+            <br>
+            <div style="cursor:pointer;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="getSystem('The Solar System')">The Solar System</a>
+              <a class="dropdown-item" (click)="getSystem('The Solar System')">Binary Stars</a>
+            </div>
+          </div>
+      <h4>
+        {{ name }}
+      </h4>
+      <hr>
+      <div class="table-wrapper row">
+        <table>
+          <thead>
+            <tr>
+              <th>Planet</th>
+              <th>Mass</th>
+              <th>Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let planet of planets; index as i">
+              <td style="width: 35%">{{ planet.name }}</td>
+              <td style="width: 55%">
+                <span>{{ planet.mass }}</span>
+                <br>
+                <button class="btn btn-secondary btn-sm" (click)="onMassDown(i)">-</button>
+                <button class="btn btn-secondary btn-sm" (click)="onMassUp(i)">+</button>
+              </td>
+              <td style="width: 20%">
+                <input type="checkbox" checked (change)="planets[i].show = !planets[i].show">
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="col-md-3">
-        <div *ngFor="let planet of preDefinedPlanets" class="col-md-2">
-          <div>{{ planet.name }}</div>
-        </div>
-        <div *ngIf="!loading; else loadingScreen">  
-          <button class="btn btn-primary" (click)="onGetSimulation()">Simulate</button>
-        </div>
+      <hr>
+      <div class="text-right" *ngIf="!loading; else loadingScreen">  
+        <button class="btn btn-info" id="sim" (click)="onGetSimulation()">Simulate</button>
       </div>
     </div>
   </div>
+  
+</div>
+
 
 
 <ng-template #loadingScreen>

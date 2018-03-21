@@ -17,8 +17,8 @@ module.exports = {
         solar.simulateSystem(socket, message)      
       })
 
-      socket.on("get planets", () => {
-        solar.fetchPlanets(socket)
+      socket.on("get system", (name) => {
+        solar.fetchSystem(socket, name)
       })
     })
   }

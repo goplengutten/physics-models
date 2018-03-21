@@ -102,7 +102,7 @@ for tstep in range(1,Nt):
     """
   frame = {
     "x": x,
-    "y": y 
+    "y": y
   }
   #fullSimulation.append(timeStepInfo)
   frames.append(frame)

@@ -11,22 +11,23 @@ import { SocketService } from '../../socket.service';
 
 export class SolarSimulationComponent implements OnInit, OnDestroy {
   loading = false
-  preDefinedPlanets
-  simulation
-  chosenPlanets = []
-  frames = []
   connection
+  
+  name
+  names
+  simulation
+  planets
+  frames = []
 
 
   constructor(private socketService: SocketService) { }
 
   ngOnInit() {
-    let connection = this.socketService.getPlanets().subscribe((info) => { 
-      this.preDefinedPlanets = info 
-      connection.unsubscribe()
-    })
+    this.getSystem("The Solar System")
     let layout = {
-      margin: { l: 0, r: 0, b: 0, t: 0 }
+      margin: { l: 20, r: 10, b: 20, t: 10 },
+      xaxis: {range: [-2, 2]},
+      yaxis: {range: [-1.5, 1.5]}
     }
     Plotly.newPlot("animation", [], layout)
   }
@@ -37,9 +38,30 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
     }
   }
 
+  getSystem(name){
+    let connection = this.socketService.getSystem(name).subscribe((info) => {
+      this.name = info["name"]
+      this.planets = info["planets"].slice()
+      this.planets.forEach((planet) => {
+        planet.show = true
+      })
+        
+      connection.unsubscribe()
+    })
+  }
+
+  onMassUp(i){
+    this.planets[i].mass *= 1.05
+  }
+  onMassDown(i){
+    this.planets[i].mass *= 0.95
+  }
+
   onGetSimulation(){
     this.loading = true
-    this.connection = this.socketService.solarSim(this.preDefinedPlanets).subscribe((info) => {  
+    let chosenPlanets = this.planets.filter((planet) => planet.show)
+    this.names = chosenPlanets.map((planet) => planet.name)
+    this.connection = this.socketService.solarSim(chosenPlanets).subscribe((info) => {  
       this.loading = false
       this.simulation = info
       this.connection.unsubscribe()
@@ -47,7 +69,7 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
     })
   }
   animation(){
-
+    this.frames = []
     let nFrames = this.simulation.length
 
     for (let i = 0; i < nFrames; i++) {
@@ -56,16 +78,20 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
       })
     }    
 
-    let trace = {
+    let trace = [{
       x: this.frames[0].data[0].x,
       y: this.frames[0].data[0].y,
-      mode: 'markers',
-      showlegend: false    
-    }
+      mode: 'markers+text',
+      showlegend: false,
+      text: this.names,
+      textposition: 'top center',
+
+    }]
 
     let layout = {
-      xaxis: {range: [-50, 50]},
-      yaxis: {range: [-50, 50]},
+      margin: { l: 20, r: 10, b: 20, t: 10 },
+      xaxis: {range: [-2, 2]},
+      yaxis: {range: [-1.5, 1.5]},
       transition: {
         duration: 2,
         easing: 'linear'
@@ -77,7 +103,7 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
       mode: "immediate"
     }
 
-    Plotly.plot('animation', [trace], layout)
+    Plotly.newPlot('animation', trace, layout)
     Plotly.animate('animation', this.frames, layout)
   }
 }

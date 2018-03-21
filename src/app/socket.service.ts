@@ -20,9 +20,11 @@ export class SocketService {
       socket.emit("quantum simulation", stringified)
 
       socket.on("streaming info", (data) => {
+        console.log()
         simulation += data
       })
       socket.on("complete", () => {
+        console.log(simulation)
         simulation = JSON.parse(simulation)
         
         observer.next(simulation)
@@ -32,15 +34,15 @@ export class SocketService {
     return observable
   }
 
-  getPlanets(){
+  getSystem(name){
     let observable = new Observable(observer => {
       let socket = io(this.url)
 
-      socket.emit("get planets")
+      socket.emit("get system", name)
 
-      socket.on("planets", (data) => {
-        let planets = JSON.parse(data)
-        observer.next(planets)
+      socket.on("system", (data) => {
+        let system = JSON.parse(data)
+        observer.next(system)
       })
       return () => { socket.disconnect() }
     })  
