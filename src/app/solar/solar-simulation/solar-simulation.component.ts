@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as Plotly from 'plotly.js';
 import { SocketService } from '../../socket.service';
 
@@ -9,12 +9,14 @@ import { SocketService } from '../../socket.service';
   providers: [SocketService]
 })
 
-export class SolarSimulationComponent implements OnInit {
+export class SolarSimulationComponent implements OnInit, OnDestroy {
   loading = false
   preDefinedPlanets
   simulation
   chosenPlanets = []
   frames = []
+  connection
+
 
   constructor(private socketService: SocketService) { }
 
@@ -24,22 +26,23 @@ export class SolarSimulationComponent implements OnInit {
       connection.unsubscribe()
     })
     let layout = {
-      margin: {
-        l: 20,
-        r: 10,
-        b: 20,
-        t: 30
-      }
+      margin: { l: 0, r: 0, b: 0, t: 0 }
     }
     Plotly.newPlot("animation", [], layout)
   }
 
+  ngOnDestroy(){
+    if(this.connection){
+      this.connection.unsubscribe()
+    }
+  }
+
   onGetSimulation(){
     this.loading = true
-    let connection = this.socketService.solarSim(this.preDefinedPlanets).subscribe((info) => {  
+    this.connection = this.socketService.solarSim(this.preDefinedPlanets).subscribe((info) => {  
       this.loading = false
       this.simulation = info
-      connection.unsubscribe()
+      this.connection.unsubscribe()
       this.animation()
     })
   }

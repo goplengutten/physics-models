@@ -75,7 +75,7 @@ eigFuncs_list = []
 
 #loop over nrOfEigFuncs and append to eigFuncs_list
 for i in range(0,nrOfEigFuncs):
-    probDensity = abs(eigvecs[:,i])**2
+    probDensity = abs(eigvecs[:,i])**2 + np.ones(N)*eigvals[i]
     probDensity = probDensity.tolist()
     eigFuncs_list.append(probDensity)
 

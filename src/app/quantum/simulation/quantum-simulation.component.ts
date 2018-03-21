@@ -34,28 +34,41 @@ export class QuantumSimulationComponent implements OnInit {
       tfinal: 10,
       coeffs: [1,0,0,0]
     }
+    this.drawPot()
+  }
+
+  drawPot(){
+    let info = this.getPot()
     let layout = {
-      margin: {
-        l: 20,
-        r: 10,
-        b: 20,
-        t: 30,
+      margin: { l: 15, r: 0, b: 20, t: 0 }
+    }
+    
+    Plotly.newPlot("animation", [info], layout, {displayModeBar: false})
+    Plotly.newPlot("plot", [info], layout, {displayModeBar: false})
+  }
+
+  getPot(){
+    let y = []
+    let x = []
+    if(this.potential === "HO"){
+      let dx = 2*this.params.lx/(this.params.ng - 1)
+      for(let i = 0; i < this.params.ng; i++){
+        let xi = (-this.params.lx + i*dx)
+        x.push(xi)
+        y.push(0.5*this.params.omega*this.params.omega*xi*xi)
+      }
+    }else if(this.potential === "DW"){
+      let dx = 2*this.params.lx/(this.params.ng - 1)
+      for(let i = 0; i < this.params.ng; i++){
+        let xi = (-this.params.lx + i*dx)
+        x.push(xi)
+        y.push(0.5*this.params.omega*this.params.omega*xi*xi +0.5*this.params.omega*this.params.omega*(0.25*this.params.R*this.params.R - this.params.R*Math.abs(xi)))
       }
     }
-    Plotly.newPlot("animation", [], layout)
-    Plotly.newPlot("plot", [], layout)
+    return { x: x, y: y }
   }
 
   onSetPotential(potential){
-    this.params = {
-      lx: 4,
-      ng: 200,
-      nstates: 4,
-      dt: 0.1,
-      tfinal: 10,
-      coeffs: [1,0,0,0]
-    }
-
     if(potential === "HO"){
       this.potential = "HO"
       this.params.omega = 1
@@ -65,6 +78,7 @@ export class QuantumSimulationComponent implements OnInit {
       this.params.omega = 1
       this.params.R = 2
     }
+    this.drawPot()
   }
 
   onLxUp(){
@@ -80,7 +94,7 @@ export class QuantumSimulationComponent implements OnInit {
     this.params.ng -= this.params.ng > 100 ? 25 : 0
   }
   onNstatesUp(){
-    if(this.params.nstates < 11){
+    if(this.params.nstates < 12){
       this.params.nstates += 1 
       this.params.coeffs.push(0)
     }
@@ -157,12 +171,7 @@ export class QuantumSimulationComponent implements OnInit {
     })
     
     let layout = {
-      margin: {
-        l: 20,
-        r: 10,
-        b: 20,
-        t: 30,
-      },
+      margin: { l: 20, r: 10, b: 20, t: 30 },
       legend: {
         x: 0,
         y: 1
@@ -172,12 +181,12 @@ export class QuantumSimulationComponent implements OnInit {
         autorange: false,
       },
       yaxis: {
-        range: [0, 1],
-        autorange: false
+        //range: [0, 1],
+        autorange: true
       },
     }
     
-    Plotly.newPlot("plot", data, layout)
+    Plotly.newPlot("plot", data, layout, {displayModeBar: false})
   }
 
   animation(x, potential, psis){
@@ -227,7 +236,7 @@ export class QuantumSimulationComponent implements OnInit {
       }
     }
 
-    Plotly.newPlot('animation', data, layout)
-    Plotly.animate('animation', this.frames, layout)
+    Plotly.newPlot('animation', data, layout, {displayModeBar: false})
+    Plotly.animate('animation', this.frames, layout, {displayModeBar: false})
   }
 }
