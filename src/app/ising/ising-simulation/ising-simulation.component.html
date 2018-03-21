@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2 text-center">
+      <div class="col-xs-12">
+        <h4>Temperature</h4>
+      </div>
+      <div class="col-xs-12">
+          <button class="btn btn-secondary btn-sm" (click)="onTempDown()">-</button>
+        <span>{{ temp.toFixed(2) }}K</span>
+        <button class="btn btn-secondary btn-sm" (click)="onTempUp()">+</button>
+      </div>
+      <div class="col-xs-12 slidecontainer text-center">
+        <input [(ngModel)]="temp" type="range" min="0" max="5" value="temp" step="0.01" class="slider">        
+      </div>
+      <hr>
+      <div class="col-xs-12">
+        <h4>H</h4>
+      </div>
+      <div class="col-xs-12">
+        <button class="btn btn-secondary btn-sm" (click)="onHDown()">-</button>
+        <span>{{ H.toFixed(2) }}</span>
+        <button class="btn btn-secondary btn-sm" (click)="onHUp()">+</button>
+      </div>
+      <div class="col-xs-12 slidecontainer text-center">
+        <input [(ngModel)]="H" type="range" min="-2" max="2" value="H" step="0.01" class="slider">        
+      </div>
+      <hr>
+      <div class="col-xs-12">
+        <h4>Refresh speed</h4>
+      </div>
+      <div class="col-xs-12">
+        <button class="btn btn-secondary btn-sm" (click)="onTimeDown()">-</button>
+        <span>{{ time }}</span>
+        <button class="btn btn-secondary btn-sm" (click)="onTimeUp()">+</button>
+      </div>
+      <div class="col-xs-12 slidecontainer text-center">
+        <input [(ngModel)]="time" type="range" min="5" max="200" value="time" class="slider">        
+      </div>
+      <hr>
+      <button *ngIf="!simulating" class="btn btn-secondary" (click)="start()">Start</button>
+      <button *ngIf="simulating" class="btn btn-secondary" (click)="stop()">Stop</button>
+      <button *ngIf="!simulating" class="btn btn-secondary" (click)="initialize()">Restart</button>
+
+    </div>
+    <div class="col-md-6 text-center">
+      <div id="animation"></div>
+    </div>
+    <div class="col-md-2">
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Info</strong></li>
+        <li class="list-group-item">Cycles : {{ counter }}</li>
+        
+        <li class="list-group-item"> &#10216; E &#10217; : {{ (avgE/(n_spins*n_spins*counter)).toFixed(2) }}</li>
+        <li class="list-group-item"> &#10216; M &#10217; : {{ (avgM/(n_spins*n_spins*counter)).toFixed(2) }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+

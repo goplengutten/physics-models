@@ -10,7 +10,7 @@ import { SocketService } from '../../socket.service';
 })
 
 export class SolarSimulationComponent implements OnInit {
-  status = "choosing"
+  loading = false
   preDefinedPlanets
   simulation
   chosenPlanets = []
@@ -23,12 +23,21 @@ export class SolarSimulationComponent implements OnInit {
       this.preDefinedPlanets = info 
       connection.unsubscribe()
     })
+    let layout = {
+      margin: {
+        l: 20,
+        r: 10,
+        b: 20,
+        t: 30
+      }
+    }
+    Plotly.newPlot("animation", [], layout)
   }
 
   onGetSimulation(){
-    this.status = "loading"
+    this.loading = true
     let connection = this.socketService.solarSim(this.preDefinedPlanets).subscribe((info) => {  
-      this.status = "simulating"
+      this.loading = false
       this.simulation = info
       connection.unsubscribe()
       this.animation()
@@ -43,23 +52,17 @@ export class SolarSimulationComponent implements OnInit {
         data: [{x: this.simulation[i].x, y: this.simulation[i].y}],
       })
     }    
-    Plotly.plot('animation', [{
+
+    let trace = {
       x: this.frames[0].data[0].x,
       y: this.frames[0].data[0].y,
       mode: 'markers',
       showlegend: false    
-    }], {
+    }
+
+    let layout = {
       xaxis: {range: [-50, 50]},
       yaxis: {range: [-50, 50]},
-      width: 800,
-      height: 800,
-    })
-    this.startAnimation()
-  }
-
-
-  startAnimation () {
-    Plotly.animate('animation', this.frames, {
       transition: {
         duration: 2,
         easing: 'linear'
@@ -69,6 +72,9 @@ export class SolarSimulationComponent implements OnInit {
         redraw: false,
       },
       mode: "immediate"
-    })
+    }
+
+    Plotly.plot('animation', [trace], layout)
+    Plotly.animate('animation', this.frames, layout)
   }
 }

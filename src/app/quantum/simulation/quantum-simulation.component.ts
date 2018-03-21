@@ -34,6 +34,16 @@ export class QuantumSimulationComponent implements OnInit {
       tfinal: 10,
       coeffs: [1,0,0,0]
     }
+    let layout = {
+      margin: {
+        l: 20,
+        r: 10,
+        b: 20,
+        t: 30,
+      }
+    }
+    Plotly.newPlot("animation", [], layout)
+    Plotly.newPlot("plot", [], layout)
   }
 
   onSetPotential(potential){
@@ -150,20 +160,11 @@ export class QuantumSimulationComponent implements OnInit {
 
     let connection = this.socketService.requestQuantum(simInfo).subscribe((info) => {  
       connection.unsubscribe()
-      Plotly.purge("plot")
-      Plotly.purge("animation")
-      setTimeout(() => {
-        this.eigenFunctions(info["x"], info["potential"], info["eigFuncs"])
-        this.animation(info["x"], info["potential"], info["animation"])
-      }, 1000)
+      this.eigenFunctions(info["x"], info["potential"], info["eigFuncs"])
+      this.animation(info["x"], info["potential"], info["animation"])
     })
   }
 
-
-  onRestartAnim(){
-    this.startAnimation()
-  }
-  
   eigenFunctions(x, potential, eigFuncs){        
     let data = []
     eigFuncs.forEach((psi, i) => {
@@ -171,7 +172,7 @@ export class QuantumSimulationComponent implements OnInit {
         x: x,
         y: psi,
         name: `Psi${i+1}`,
-        type: 'scatter'
+        type: 'lines'
       })
     })
 
@@ -179,21 +180,31 @@ export class QuantumSimulationComponent implements OnInit {
       x: x,
       y: potential,
       name: "V(x)",
-      type: 'scatter'
+      type: 'lines'
     })
     
     let layout = {
-      title: "Eigenfunctions",
+      margin: {
+        l: 20,
+        r: 10,
+        b: 20,
+        t: 30,
+      },
+      legend: {
+        x: 0,
+        y: 1
+      },
       xaxis: {
         range: [x[0], x[x.length - 1]],
-        autorange: false
+        autorange: false,
       },
       yaxis: {
         range: [0, 1],
         autorange: false
       },
     }
-    Plotly.plot("plot", data, layout)
+    
+    Plotly.newPlot("plot", data, layout)
   }
 
   animation(x, potential, psis){
@@ -202,38 +213,48 @@ export class QuantumSimulationComponent implements OnInit {
     
     for (let i = 0; i < nFrames; i++) {
       this.frames.push({
-        data: [{x: x, y: psis[i]}],
+        data: [{x: x, y: psis[i]}, {x: x, y: potential}, {x: x, y: psis[0]}]
       })
     }
 
-    Plotly.plot('animation', [{
+    let trace1 = {
       x: this.frames[0].data[0].x,
       y: this.frames[0].data[0].y,
       mode: 'lines',
-      showlegend: false,
+      name: "|Psi(x,t)|^2",
       line: {simplify: false}
-    }], {
-      xaxis: {range: [x[0], x[x.length - 1]]},
-      yaxis: {range: [0, 1]}
-    })
-    this.startAnimation()
-  }
+    }
 
-  stopAnimation () {
-    Plotly.animate('animation', [], {mode: 'next'})
-  }
-  
-  startAnimation () {
-    Plotly.animate('animation', this.frames, {
-      transition: {
-        duration: 50,
-        easing: 'linear'
-      },
-      frame: {
-        duration: 50,
-        redraw: false,
-      },
-      mode: "immediate"
-    })
+    let trace2 = { 
+      x: this.frames[0].data[1].x, 
+      y: this.frames[0].data[1].y,
+      name: "V(x)",
+      mode: 'lines',
+    }
+
+    let trace3 = {
+      x: this.frames[0].data[2].x, 
+      y: this.frames[0].data[2].y,
+      name: "|Psi(x,0)|^2",
+      mode: 'lines',
+    }
+
+    let data = [trace1, trace2, trace3]
+    
+    let layout = {
+      xaxis: {range: [x[0], x[x.length - 1]]},
+      yaxis: {range: [0, 1]},
+      margin: {l: 20, r: 10, b: 20, t: 30},
+      transition: {duration: 50,easing: 'linear'},
+      frame: {duration: 50,redraw: false},
+      mode: "immediate",
+      legend: {
+        x: 0,
+        y: 1
+      }
+    }
+
+    Plotly.newPlot('animation', data, layout)
+    Plotly.animate('animation', this.frames, layout)
   }
 }

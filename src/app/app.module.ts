@@ -16,6 +16,9 @@ import { ElmagComponent } from './elmag/elmag.component';
 import { QuantumInfoComponent } from './quantum/info/quantum-info.component';
 import { Type1Component } from './quantum/type1/type1.component';
 import { QuantumSimulationComponent } from './quantum/simulation/quantum-simulation.component';
+import { IsingComponent } from './ising/ising.component';
+import { IsingInfoComponent } from './ising/ising-info/ising-info.component';
+import { IsingSimulationComponent } from './ising/ising-simulation/ising-simulation.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -33,6 +36,14 @@ const appRoutes: Routes = [
     { path: "info", component: SolarInfoComponent },
     { path: "simulation", component: SolarSimulationComponent},
   ] },  
+
+  { path: 'ising', redirectTo: "ising/info", pathMatch: 'full' },
+  { path: "ising", component: IsingComponent, children: [
+    { path: "info", component: IsingInfoComponent },
+    { path: "simulation", component: IsingSimulationComponent},
+  ] },  
+
+
   { path: 'elmag', component: ElmagComponent},
   { path: '**', redirectTo: "home", pathMatch: "full" }
 ]
@@ -49,7 +60,10 @@ const appRoutes: Routes = [
     SolarComponent,
     SolarInfoComponent,
     SolarSimulationComponent,
-    ElmagComponent
+    ElmagComponent,
+    IsingComponent,
+    IsingInfoComponent,
+    IsingSimulationComponent
   ],
   imports: [
     BrowserModule,

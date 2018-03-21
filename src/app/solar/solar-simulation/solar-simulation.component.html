@@ -1,24 +1,23 @@
-<ng-template [ngIf]="status === 'choosing'">  
   <div class="container">
     <div class="row">
-      <div *ngFor="let planet of preDefinedPlanets" class="col-md-2">
-        <div class="card">
-          <div class="card-title">{{ planet.name }}</div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Mass</li>
-            <li class="list-group-item">Vel</li>
-            <li class="list-group-item">Pos</li>
-          </ul>
-          <button class="btn btn-primary">Add to simulation</button>
+      <div class="col-md-9">
+        <div id="animation"></div>
+      </div>
+      <div class="col-md-3">
+        <div *ngFor="let planet of preDefinedPlanets" class="col-md-2">
+          <div>{{ planet.name }}</div>
+        </div>
+        <div *ngIf="!loading; else loadingScreen">  
+          <button class="btn btn-primary" (click)="onGetSimulation()">Simulate</button>
         </div>
       </div>
     </div>
-    <button class="btn btn-primary" (click)="onGetSimulation()">Simulate</button>
   </div>
-</ng-template>
-<div id="animation"></div>
 
-<ng-template [ngIf]="status === 'loading'"><p><strong>Loading...</strong></p></ng-template>
-<ng-template [ngIf]="status === 'simulating'">
-  <div id="animation"></div>
+
+<ng-template #loadingScreen>
+  <p><strong>Loading...</strong></p>
 </ng-template>
+
+
+

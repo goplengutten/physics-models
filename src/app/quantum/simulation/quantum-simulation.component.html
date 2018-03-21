@@ -15,7 +15,6 @@
         </div>
       </div>
       <button style="margin-top: 10px;" class="btn btn-primary" (click)="onGetSimulation()">Simulate</button>
-      <button style="margin-top: 10px" *ngIf="frames && frames.length > 0" class="btn btn-primary" (click)="onRestartAnim()">Restart</button>  
     </div>
     <div class="col-md-5">
       <div *ngIf="potential">
@@ -112,7 +111,17 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Eigenfunctions</h3>
+      <hr>
+      <div id="plot"></div>
+    </div>
+    <div class="col-md-6">
+      <h3>Time Evolution</h3>
+      <hr>
+      <div id="animation"></div>
+    </div>
+  </div>
     
-  <div style="height: 500px; width: 500px;" id="plot"></div>
-  <div style="height: 500px; width: 500px;" id="animation"></div>
 </div>
