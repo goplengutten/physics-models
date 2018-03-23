@@ -4,10 +4,9 @@
       <h3>
         Eigenfunctions
         <div class="dropdown float-right">
-          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Potentials: ({{ potential }})
           </button>
-          <br>
           <div style="cursor:pointer;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" (click)="onSetPotential('HO')">Harmonic oscillator (HO)</a>
             <a class="dropdown-item" (click)="onSetPotential('DW')">Double well (DW)</a>
@@ -19,7 +18,7 @@
       <div id="plot"></div>
     </div>
     <div class="col-md-6">
-      <h3>Time Evolution <button class="btn btn-primary float-right" (click)="onGetSimulation()">Simulate</button></h3>
+      <h3>Time Evolution <button class="btn btn-info float-right" (click)="onGetSimulation()">Simulate</button></h3>
       <hr>
       <div id="animation"></div>
     </div>
@@ -94,4 +93,5 @@
   <hr>
 </div>
 
-
+  
+  

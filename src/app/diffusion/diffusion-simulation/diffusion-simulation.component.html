@@ -1,0 +1,64 @@
+<div class="container">
+  <h1>Diffusion equation</h1>
+  <hr>
+  <div class="row">
+    <div class="col-lg-8 col-xs-12">
+      <div id="animation"></div>
+    </div>
+    <div class="col-lg-4 col-xs-12">
+      <div class="container">
+        <h4>
+          Parameters
+        </h4>
+        <hr>
+        <div class="row">
+          <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            Param name: 
+          </div>
+          <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <button class="btn btn-secondary btn-sm" (click)="onDown()">-</button>
+            <span>10</span>
+            <button class="btn btn-secondary btn-sm" (click)="onUp()">+</button>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            Param name: 
+          </div>
+          <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <button class="btn btn-secondary btn-sm" (click)="onDown()">-</button>
+            <span>10</span>
+            <button class="btn btn-secondary btn-sm" (click)="onUp()">+</button>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            Param name: 
+          </div>
+          <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <button class="btn btn-secondary btn-sm" (click)="onDown()">-</button>
+            <span>10</span>
+            <button class="btn btn-secondary btn-sm" (click)="onUp()">+</button>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <div class="text-center">  
+        <button [disabled]="loading" class="btn btn-info" (click)="getSimulation()">Get sim</button>
+        <button [disabled]="!simulation" class="btn btn-info" (click)="index = 0">Restart</button>
+      </div>
+      <div class="text-center" *ngIf="loading">
+        <p><strong>Loading...</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #loadingScreen>
+  
+</ng-template>
+  

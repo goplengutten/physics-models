@@ -2,28 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import * as Plotly from 'plotly.js';
-import { SocketService } from '../../socket.service';
+import { SocketService } from '../../../socket.service';
 
 
 @Component({
-  selector: 'app-quantum-simulation',
-  templateUrl: './quantum-simulation.component.html',
-  styleUrls: ['./quantum-simulation.component.css'],
+  selector: 'app-eigenfunctions-simulation-1d',
+  templateUrl: './eigenfunctions-simulation-1d.component.html',
+  styleUrls: ['./eigenfunctions-simulation-1d.component.css'],
   providers: [SocketService]
 })
 
-export class QuantumSimulationComponent implements OnInit {
+export class EigenfunctionsSimulation1dComponent implements OnInit {
   
-  type: string
+  type: string = "1dEigenfunctions"
   potential: string
   params
+  connection
 
   frames
 
-  constructor(private route: ActivatedRoute, private socketService: SocketService) { }
+  constructor(private socketService: SocketService) { }
 
   ngOnInit() {
-    this.type = this.route.snapshot.params["type"]
     this.potential = "HO"
     this.params = {
       lx: 4,
@@ -35,6 +35,12 @@ export class QuantumSimulationComponent implements OnInit {
       coeffs: [1,0,0,0]
     }
     this.drawPot()
+  }
+
+  ngOnDestroy(){
+    if(this.connection){
+      this.connection.unsubscribe()
+    }
   }
 
   drawPot(){
@@ -69,12 +75,21 @@ export class QuantumSimulationComponent implements OnInit {
   }
 
   onSetPotential(potential){
+    this.params = {
+      lx: 4,
+      ng: 200,
+      nstates: 4,
+      dt: 0.1,
+      tfinal: 10,
+      coeffs: [1,0,0,0]
+    }
     if(potential === "HO"){
       this.potential = "HO"
       this.params.omega = 1
 
     }else if(potential === "DW"){
       this.potential = "DW"
+      
       this.params.omega = 1
       this.params.R = 2
     }
@@ -145,8 +160,8 @@ export class QuantumSimulationComponent implements OnInit {
       params: this.params
     }
 
-    let connection = this.socketService.requestQuantum(simInfo).subscribe((info) => {  
-      connection.unsubscribe()
+    this.connection = this.socketService.getSim("quantum simulation", simInfo).subscribe((info) => {  
+      this.connection.unsubscribe()
       this.eigenFunctions(info["x"], info["potential"], info["eigFuncs"])
       this.animation(info["x"], info["potential"], info["animation"])
     })

@@ -12,7 +12,6 @@ import { SocketService } from '../../socket.service';
 export class SolarSimulationComponent implements OnInit, OnDestroy {
   loading = false
   connection
-  
   name
   names
   simulation
@@ -61,7 +60,7 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
     this.loading = true
     let chosenPlanets = this.planets.filter((planet) => planet.show)
     this.names = chosenPlanets.map((planet) => planet.name)
-    this.connection = this.socketService.solarSim(chosenPlanets).subscribe((info) => {  
+    this.connection = this.socketService.getSim("solar simulation", chosenPlanets).subscribe((info) => {  
       this.loading = false
       this.simulation = info
       this.connection.unsubscribe()
@@ -84,8 +83,7 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
       mode: 'markers+text',
       showlegend: false,
       text: this.names,
-      textposition: 'top center',
-
+      textposition: 'top center'
     }]
 
     let layout = {

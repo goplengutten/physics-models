@@ -1,6 +1,8 @@
-<div class="container-fluid">
+<div class="container">
+  <h1>Ising model</h1>
+  <hr>
   <div class="row">
-    <div class="col-md-2 text-center">
+    <div class="col-md-3 text-center wrapper">
       <div class="col-xs-12">
         <h4>Temperature</h4>
       </div>
@@ -42,10 +44,10 @@
       <button *ngIf="!simulating" class="btn btn-secondary" (click)="initialize()">Restart</button>
 
     </div>
-    <div class="col-md-6 text-center">
+    <div class="col-md-7 wrapper">
       <div id="animation"></div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 wrapper">
       <ul class="list-group">
         <li class="list-group-item"><strong>Info</strong></li>
         <li class="list-group-item">Cycles : {{ counter }}</li>

@@ -1,14 +1,48 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLinkActive="active" routerLink="/home">Fun With Physics</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" routerLink="/home">Fun With Physics</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/quantum">Quantum</a>
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/solar">Solar</a>
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/elmag">Elmag</a>
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/ising">Ising</a>
-    </div>
+  </button>  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" style="cursor:pointer;">
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quantum</a>
+        <div class="dropdown-menu"  aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/quantum/theory">Full theory</a>
+          <a class="dropdown-item" routerLink="/quantum/eigenfunctions/theory">Theory</a>
+          <a class="dropdown-item" routerLink="/quantum/eigenfunctions/simulation/1d">1D Simulation</a>
+          <a class="dropdown-item" routerLink="/quantum/eigenfunctions/simulation/2d">2D Simulation</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Solar</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/solar/theory">Theory</a>
+          <a class="dropdown-item" routerLink="/solar/simulation">Simulation</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ising</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/ising/theory">Theory</a>
+          <a class="dropdown-item" routerLink="/ising/simulation">Simulation</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Diffusion</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/diffusion/theory">Theory</a>
+          <a class="dropdown-item" routerLink="/diffusion/simulation">Simulation</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wave</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/wave/theory">Theory</a>
+          <a class="dropdown-item" routerLink="/wave/simulation">Simulation</a>
+        </div>
+      </li>
+    </ul>
   </div>
 </nav>
+

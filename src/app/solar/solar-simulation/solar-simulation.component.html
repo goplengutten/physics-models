@@ -1,19 +1,20 @@
 <div class="container">
+  <h1>Solar systems</h1>
+  <hr>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-lg-8 wrapper">
       <div id="animation"></div>
     </div>
-    <div *ngIf="planets" class="col-md-4">
-        <div class="dropdown float-right">
-            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Systems
-            </button>
-            <br>
-            <div style="cursor:pointer;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" (click)="getSystem('The Solar System')">The Solar System</a>
-              <a class="dropdown-item" (click)="getSystem('The Solar System')">Binary Stars</a>
-            </div>
-          </div>
+    <div *ngIf="planets" class="col-lg-4 wrapper">
+      <div class="dropdown float-right">
+        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Systems
+        </button>
+        <div style="cursor:pointer;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="getSystem('The Solar System')">The Solar System</a>
+          <a class="dropdown-item" (click)="getSystem('The Solar System')">Binary Stars</a>
+        </div>
+      </div>
       <h4>
         {{ name }}
       </h4>
@@ -51,8 +52,6 @@
   </div>
   
 </div>
-
-
 
 <ng-template #loadingScreen>
   <p><strong>Loading...</strong></p>

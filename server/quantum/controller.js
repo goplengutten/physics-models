@@ -7,7 +7,7 @@ module.exports.simulateSystem = function(socket, message){
 
   message = JSON.parse(message)
 
-  if(message.simulationType === "type1"){
+  if(message.simulationType === "1dEigenfunctions"){
 
     let params = {
       potential: message.potential,

@@ -8,41 +8,64 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { LandingComponent } from './landing/landing.component';
-import { QuantumComponent } from './quantum/quantum.component';
 import { SolarComponent } from './solar/solar.component';
-import { SolarInfoComponent } from './solar/info/solar-info.component';
+import { SolarInfoComponent } from './solar/solar-info/solar-info.component';
 import { SolarSimulationComponent } from './solar/solar-simulation/solar-simulation.component';
 import { ElmagComponent } from './elmag/elmag.component';
-import { QuantumInfoComponent } from './quantum/info/quantum-info.component';
-import { Type1Component } from './quantum/type1/type1.component';
-import { QuantumSimulationComponent } from './quantum/simulation/quantum-simulation.component';
 import { IsingComponent } from './ising/ising.component';
 import { IsingInfoComponent } from './ising/ising-info/ising-info.component';
 import { IsingSimulationComponent } from './ising/ising-simulation/ising-simulation.component';
+import { DiffusionComponent } from './diffusion/diffusion.component';
+import { DiffusionInfoComponent } from './diffusion/diffusion-info/diffusion-info.component';
+import { DiffusionSimulationComponent } from './diffusion/diffusion-simulation/diffusion-simulation.component';
+import { WaveComponent } from './wave/wave.component';
+import { WaveInfoComponent } from './wave/wave-info/wave-info.component';
+import { WaveSimulationComponent } from './wave/wave-simulation/wave-simulation.component';
+import { QuantumComponent } from './quantum/quantum.component';
+import { QuantumInfoComponent } from './quantum/quantum-info/quantum-info.component';
+import { EigenfunctionsComponent } from './quantum/eigenfunctions/eigenfunctions.component';
+import { EigenfunctionsInfoComponent } from './quantum/eigenfunctions/eigenfunctions-info/eigenfunctions-info.component';
+import { EigenfunctionsSimulation1dComponent } from './quantum/eigenfunctions/eigenfunctions-simulation-1d/eigenfunctions-simulation-1d.component';
+import { EigenfunctionsSimulation2dComponent } from './quantum/eigenfunctions/eigenfunctions-simulation-2d/eigenfunctions-simulation-2d.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: LandingComponent },
 
-  { path: 'quantum', redirectTo: "quantum/info", pathMatch: 'full' },
+  { path: "quantum", redirectTo: "quantum/theory", pathMatch: 'full' },
   { path: "quantum", component: QuantumComponent, children: [
-    { path: "info", component: QuantumInfoComponent },
-    { path: "type1", component: Type1Component },
-    { path: ":type/simulation", component: QuantumSimulationComponent },
+    { path: "theory", component: QuantumInfoComponent },
+    { path: "eigenfunctions", component: EigenfunctionsComponent,  children: [
+      { path: "theory", component: EigenfunctionsInfoComponent },      
+      { path: "simulation/1d", component: EigenfunctionsSimulation1dComponent },
+      { path: "simulation/2d", component: EigenfunctionsSimulation2dComponent },
+
+     ]}
   ] },
   
-  { path: 'solar', redirectTo: "solar/info", pathMatch: 'full' },
+  { path: 'solar', redirectTo: "solar/theory", pathMatch: 'full' },
   { path: "solar", component: SolarComponent, children: [
-    { path: "info", component: SolarInfoComponent },
+    { path: "theory", component: SolarInfoComponent },
     { path: "simulation", component: SolarSimulationComponent},
   ] },  
 
-  { path: 'ising', redirectTo: "ising/info", pathMatch: 'full' },
+  { path: 'ising', redirectTo: "ising/theory", pathMatch: 'full' },
   { path: "ising", component: IsingComponent, children: [
-    { path: "info", component: IsingInfoComponent },
+    { path: "theory", component: IsingInfoComponent },
     { path: "simulation", component: IsingSimulationComponent},
-  ] },  
+  ] }, 
+  
+  { path: 'diffusion', redirectTo: "diffusion/theory", pathMatch: 'full' },
+  { path: "diffusion", component: DiffusionComponent, children: [
+    { path: "theory", component: DiffusionInfoComponent },
+    { path: "simulation", component: DiffusionSimulationComponent},
+  ] }, 
 
+  { path: 'wave', redirectTo: "wave/theory", pathMatch: 'full' },
+  { path: "wave", component: WaveComponent, children: [
+    { path: "theory", component: WaveInfoComponent },
+    { path: "simulation", component: WaveSimulationComponent},
+  ] }, 
 
   { path: 'elmag', component: ElmagComponent},
   { path: '**', redirectTo: "home", pathMatch: "full" }
@@ -53,17 +76,25 @@ const appRoutes: Routes = [
     AppComponent,
     NavComponent,
     LandingComponent,
-    QuantumComponent,
-    QuantumInfoComponent,
-    Type1Component,
-    QuantumSimulationComponent,
     SolarComponent,
     SolarInfoComponent,
     SolarSimulationComponent,
     ElmagComponent,
     IsingComponent,
     IsingInfoComponent,
-    IsingSimulationComponent
+    IsingSimulationComponent,
+    DiffusionComponent,
+    DiffusionInfoComponent,
+    DiffusionSimulationComponent,
+    WaveComponent,
+    WaveInfoComponent,
+    WaveSimulationComponent,
+    QuantumComponent,
+    QuantumInfoComponent,
+    EigenfunctionsComponent,
+    EigenfunctionsInfoComponent,
+    EigenfunctionsSimulation1dComponent,
+    EigenfunctionsSimulation2dComponent
   ],
   imports: [
     BrowserModule,

@@ -142,8 +142,6 @@ export class IsingSimulationComponent implements OnInit {
 
   plot(){
     let layout = {
-      width: 500,
-      height: 500,
       margin: { l: 0, r: 0, t: 0, b: 0 }
     }
 
