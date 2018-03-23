@@ -8,7 +8,6 @@ module.exports.simulateSystem = function(socket, message){
   message = JSON.parse(message)
 
   if(message.simulationType === "1dEigenfunctions"){
-
     let params = {
       potential: message.potential,
       potentialParams: [],
@@ -27,6 +26,13 @@ module.exports.simulateSystem = function(socket, message){
     params = JSON.stringify(params)
 
     system = spawn("python", ["server/quantum/oneDimEigFuncs.py", params])
+
+  }else if(message.simulationType === "tunneling"){
+
+    let params = JSON.stringify(message.params)
+
+    system = spawn("python", ["server/quantum/tunneling.py", params])
+
   }
 
   system.stdout.setEncoding("utf-8")

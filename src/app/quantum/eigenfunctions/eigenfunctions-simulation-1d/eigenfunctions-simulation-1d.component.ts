@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import * as Plotly from 'plotly.js';
 import { SocketService } from '../../../socket.service';
@@ -12,7 +11,7 @@ import { SocketService } from '../../../socket.service';
   providers: [SocketService]
 })
 
-export class EigenfunctionsSimulation1dComponent implements OnInit {
+export class EigenfunctionsSimulation1dComponent implements OnInit, OnDestroy {
   
   type: string = "1dEigenfunctions"
   potential: string

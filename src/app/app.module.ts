@@ -27,6 +27,9 @@ import { EigenfunctionsComponent } from './quantum/eigenfunctions/eigenfunctions
 import { EigenfunctionsInfoComponent } from './quantum/eigenfunctions/eigenfunctions-info/eigenfunctions-info.component';
 import { EigenfunctionsSimulation1dComponent } from './quantum/eigenfunctions/eigenfunctions-simulation-1d/eigenfunctions-simulation-1d.component';
 import { EigenfunctionsSimulation2dComponent } from './quantum/eigenfunctions/eigenfunctions-simulation-2d/eigenfunctions-simulation-2d.component';
+import { TunnelingComponent } from './quantum/tunneling/tunneling.component';
+import { TunnelingInfoComponent } from './quantum/tunneling/tunneling-info/tunneling-info.component';
+import { TunnelingSimulationComponent } from './quantum/tunneling/tunneling-simulation/tunneling-simulation.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -39,8 +42,11 @@ const appRoutes: Routes = [
       { path: "theory", component: EigenfunctionsInfoComponent },      
       { path: "simulation/1d", component: EigenfunctionsSimulation1dComponent },
       { path: "simulation/2d", component: EigenfunctionsSimulation2dComponent },
-
-     ]}
+    ]},
+    { path: "tunneling", component: TunnelingComponent,  children: [
+      { path: "theory", component: TunnelingInfoComponent },      
+      { path: "simulation", component: TunnelingSimulationComponent }
+    ]}
   ] },
   
   { path: 'solar', redirectTo: "solar/theory", pathMatch: 'full' },
@@ -94,7 +100,10 @@ const appRoutes: Routes = [
     EigenfunctionsComponent,
     EigenfunctionsInfoComponent,
     EigenfunctionsSimulation1dComponent,
-    EigenfunctionsSimulation2dComponent
+    EigenfunctionsSimulation2dComponent,
+    TunnelingComponent,
+    TunnelingInfoComponent,
+    TunnelingSimulationComponent,
   ],
   imports: [
     BrowserModule,

@@ -39,9 +39,9 @@
         <input [(ngModel)]="time" type="range" min="5" max="200" value="time" class="slider">        
       </div>
       <hr>
-      <button *ngIf="!simulating" class="btn btn-secondary" (click)="start()">Start</button>
-      <button *ngIf="simulating" class="btn btn-secondary" (click)="stop()">Stop</button>
-      <button *ngIf="!simulating" class="btn btn-secondary" (click)="initialize()">Restart</button>
+      <button *ngIf="!simulating" class="btn btn-info" (click)="start()">Start</button>
+      <button *ngIf="simulating" class="btn btn-info" (click)="stop()">Stop</button>
+      <button *ngIf="!simulating" class="btn btn-info" (click)="initialize()">Restart</button>
 
     </div>
     <div class="col-md-7 wrapper">
