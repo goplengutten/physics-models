@@ -2,13 +2,19 @@
   "name": "fun-with-physics",
   "version": "0.0.0",
   "license": "MIT",
+  "main": "server.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build -prod"
+  },
+  "engines": {
+    "node": "^8.0.0",
+    "npm": "^5.0.0"
   },
   "private": true,
   "dependencies": {

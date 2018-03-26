@@ -6,7 +6,6 @@ import { Subject } from "rxjs/Subject"
 @Injectable()
 export class SocketService {
 
-  private url = "http://localhost:3000"
 
   getSim(type: string, params: object){
     let simulation = ""
@@ -14,7 +13,7 @@ export class SocketService {
     let stringified = JSON.stringify(params)
     
     let observable = new Observable(observer => {
-      let socket = io(this.url)
+      let socket = io()
 
       
       socket.emit(type, stringified)
@@ -33,7 +32,7 @@ export class SocketService {
 
   getSystem(name){
     let observable = new Observable(observer => {
-      let socket = io(this.url)
+      let socket = io()
 
       socket.emit("get system", name)
 
