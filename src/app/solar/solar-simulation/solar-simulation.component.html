@@ -32,7 +32,7 @@
             <tr *ngFor="let planet of planets; index as i">
               <td style="width: 35%">{{ planet.name }}</td>
               <td style="width: 55%">
-                <span>{{ planet.mass }}</span>
+                <span>{{ planet.mass.toPrecision(2) }}</span>
                 <br>
                 <button class="btn btn-secondary btn-sm" (click)="onMassDown(i)">-</button>
                 <button class="btn btn-secondary btn-sm" (click)="onMassUp(i)">+</button>

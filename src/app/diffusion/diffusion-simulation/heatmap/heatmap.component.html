@@ -1,0 +1,14 @@
+<table 
+  id="table"
+  (mouseleave)="holding = false"
+  (mousedown)="holding = true"
+  (mouseup)="holding = false">
+  <tr *ngFor="let q of numbers; index as j" >
+    <td 
+      *ngFor="let q of numbers; index as i" 
+      class="cell"
+      (click)="clicked($event, i, j)"
+      (mouseenter)="onHover($event, i, j)"></td>
+  </tr>
+</table>
+   

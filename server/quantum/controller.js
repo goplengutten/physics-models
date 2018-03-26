@@ -24,13 +24,11 @@ module.exports.simulateSystem = function(socket, message){
     }
 
     params = JSON.stringify(params)
-
     system = spawn("python", ["server/quantum/oneDimEigFuncs.py", params])
 
   }else if(message.simulationType === "tunneling"){
 
     let params = JSON.stringify(message.params)
-
     system = spawn("python", ["server/quantum/tunneling.py", params])
 
   }

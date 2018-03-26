@@ -14,16 +14,18 @@ export class TunnelingSimulationComponent implements OnInit {
 
   connection
   type: string = "tunneling"
-  simulation
-  index = 0
+  alpha = 0.7
+  L = 1
+  V = 15
+  x = -4
+  p = 7
+
+  
 
   constructor(private socketService: SocketService) { }
 
   ngOnInit() {
-    let layout = {
-      margin: { l: 20, r: 10, b: 20, t: 10 },
-    }
-
+    let layout = { margin: { l: 20, r: 10, b: 20, t: 10 } }
     Plotly.newPlot('animation', [], layout)
   }
 
@@ -33,55 +35,107 @@ export class TunnelingSimulationComponent implements OnInit {
     }
   }
 
+  onVUp(){
+    this.V += this.V < 100 ? 5 : 0
+  }
+  onVDown(){
+    this.V -= this.V > 10 ? 5 : 0
+  }
+  onpUp(){
+    this.p += this.p < 20 ? 0.5 : 0
+    this.p = this.p > 20 ? 20 : this.p
+  }
+  onpDown(){
+    this.p -= this.p > 0 ? 0.5 : 0
+    this.p = this.p < 0 ? 0 : this.p
+  }
+  onLUp(){
+    this.L += this.L < 5 ? 0.2 : 0
+    this.L = this.L > 5 ? 5 : this.L
+  }
+  onLDown(){
+    this.L -= this.L > 0.2 ? 0.2 : 0
+    this.L = this.L < 0.2 ? 0.2 : this.L
+  }
+  onxUp(){
+    this.x += this.x < 10 ? 0.5 : 0
+    this.x = this.x > 10 ? 10 : this.x
+  }
+  onxDown(){
+    this.x -= this.x > -10 ? 0.5 : 0
+    this.x = this.x < -10 ? -10 : this.x
+  }
+  onalphaUp(){
+    this.alpha += this.alpha < 2 ? 0.1 : 0
+    this.alpha = this.alpha > 2 ? 2 : this.alpha
+  }
+  onalphaDown(){
+    this.alpha -= this.alpha > 0.1 ? 0.1 : 0
+    this.alpha = this.alpha < 0.1 ? 0.1 : this.alpha
+  }
+
   onGetSimulation(){
     let simInfo = {
       simulationType: this.type,
       params: {
-        a: "1"
+        L: this.L,
+        p: this.p,
+        alpha: this.alpha,
+        x: this.x,
+        V: this.V
       }
     }
     this.connection = this.socketService.getSim("quantum simulation", simInfo).subscribe((info) => {  
-      this.simulation = info
       this.connection.unsubscribe()
-      this.animate()
+      this.animation(info)
     })
   }
 
-  animate(){
-    let layout = {
-      margin: { l: 20, r: 10, b: 20, t: 10 },
-      xaxis: { range: [this.simulation.x[0], this.simulation.x[this.simulation.x.length - 1]] },
-      yaxis: { range: [0, 1.5] }
-    }
+  animation(info){
+    let psis = info["psi_t"]
+    let x = info["x"]
+    let potential = info["V"]
 
-
-    let trace1 = {
-      x: this.simulation.x,
-      y: this.simulation.V,
-      name: "V(x)",
-      type: 'lines'
-    }
+    let frames = []
     
-    let trace2 = {
-      x: this.simulation.x,
-      y: this.simulation.psi_t[this.index],
-      type: 'lines'
+    for (let i = 0; i < psis.length; i++) {
+      frames.push({
+        data: [{x: x, y: psis[i]}, {x: x, y: potential}]
+      })
     }
 
-    this.draw(layout, [trace1, trace2])
-  }
-
-
-  draw(layout, data){
-    if(this.index >= this.simulation.psi_t.length){
-      return
+    let initTrace = {
+      x: frames[0].data[0].x,
+      y: frames[0].data[0].y,
+      mode: 'lines',
+      name: "Psi",
+      line: {simplify: false}
     }
-    Plotly.newPlot('animation', data, layout)
-    this.index++
-    setTimeout(() => {
-      this.animate()
-    }, 50)
 
+    let potTrace = { 
+      x: frames[0].data[1].x, 
+      y: frames[0].data[1].y,
+      name: "V(x)",
+      mode: 'lines',
+    }
+
+    let data = [initTrace, potTrace]
+    
+    let layout = {
+      xaxis: {range: [x[0], x[x.length - 1]]},
+      yaxis: {range: [0, 1]},
+      margin: {l: 20, r: 10, b: 20, t: 30},
+      transition: {duration: 50,easing: 'linear'},
+      frame: {duration: 50,redraw: false},
+      mode: "immediate",
+      legend: {
+        x: 0,
+        y: 1
+      }
+    }
+
+    Plotly.newPlot('animation', data, layout, {displayModeBar: false})
+    Plotly.animate('animation', frames, layout, {displayModeBar: false})
   }
 
 }

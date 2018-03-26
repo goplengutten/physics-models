@@ -2,8 +2,9 @@
 const spawn = require("child_process").spawn
 
 module.exports.simulateSystem = function(socket, info){
-  const simulation = spawn("python", ["server/diffusion/diffusion_equation.py", info])
   
+  const simulation = spawn("python", ["server/diffusion/diffusion_equation.py"])
+
   simulation.stdout.setEncoding("utf-8")
   simulation.stdout.on("data", (data) => {
     socket.emit("streaming info", data)
@@ -17,4 +18,8 @@ module.exports.simulateSystem = function(socket, info){
     console.log("complete")
     socket.emit("complete")
   })
+
+  simulation.stdin.setEncoding("utf-8")
+  simulation.stdin.write(info)
+  simulation.stdin.end()
 }

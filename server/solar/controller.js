@@ -3,7 +3,6 @@ const spawn = require("child_process").spawn
 
 module.exports.simulateSystem = function(socket, planets){
   
-  console.log("sim")
   const simulation = spawn("python", ["server/solar/solar_system.py", planets])
   
   simulation.stdout.setEncoding("utf-8")
@@ -12,12 +11,10 @@ module.exports.simulateSystem = function(socket, planets){
   })
 
   simulation.stderr.on("data", (data) => {
-    console.log("err")
     console.log(`stderr: ${data}`)
   })
 
   simulation.on("close", (code) => {
-    console.log("complete")
     socket.emit("complete")
   })
 }

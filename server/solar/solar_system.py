@@ -100,6 +100,7 @@ for tstep in range(1,Nt):
     tmp.append(allPlanets[i].name)
     timeStepInfo.append(tmp)
     """
+    
   frame = {
     "x": x,
     "y": y

@@ -1,0 +1,58 @@
+<div class="row text-center">
+  <div class="col-lg-12">
+    <h5>Heat</h5>
+    <button class="btn btn-secondary btn-sm" (click)="simSer.onHeatDown()">-</button>
+    <span>{{ simSer.temp/10 }}</span>
+    <button class="btn btn-secondary btn-sm" (click)="simSer.onHeatUp()">+</button>
+  </div>
+  <div class="col-lg-12">
+    <div id="radio">
+      <div class="custom-control custom-radio">
+        <input 
+          type="radio" 
+          id="customRadio1" 
+          value="initial" 
+          [(ngModel)]="simSer.type" 
+          name="customRadio" 
+          class="custom-control-input">
+        <label class="custom-control-label" for="customRadio1">Initial Point</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input 
+          type="radio" 
+          id="customRadio2" 
+          value="source" 
+          [(ngModel)]="simSer.type" 
+          name="customRadio" 
+          class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2">Source Point</label>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    Number of cycles: {{ simSer.index }}
+  </div>
+  <div class="col-lg-12">
+    <button 
+      class="btn btn-info" 
+      [disabled]="simSer.loading"
+      (click)="simSer.onSimulate()"
+      >Simulate</button>
+    <button 
+      class="btn btn-info" 
+      [disabled]="!simSer.simulation || simSer.animating"
+      (click)="simSer.onStart()"
+      >Start</button>
+    <button 
+      class="btn btn-info" 
+
+      [disabled]="!simSer.animating || !simSer.simulation"
+      (click)="simSer.onStop()"
+      >Stop</button>
+    <button 
+      class="btn btn-info" 
+      [disabled]="simSer.index === 0"
+      (click)="simSer.onReset()"
+      >Resest</button>
+  </div>
+</div>

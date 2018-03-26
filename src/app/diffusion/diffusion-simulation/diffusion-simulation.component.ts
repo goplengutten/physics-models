@@ -2,78 +2,52 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import * as Plotly from 'plotly.js';
 import { SocketService } from '../../socket.service';
-
+import { DiffusionSimulationService } from './diffusion-simulation.service';
 
 @Component({
   selector: 'app-diffusion-simulation',
   templateUrl: './diffusion-simulation.component.html',
   styleUrls: ['./diffusion-simulation.component.css'],
-  providers: [SocketService]
-
+  providers: [
+    SocketService,
+    DiffusionSimulationService
+  ]
 })
 
 export class DiffusionSimulationComponent implements OnInit, OnDestroy {
+  socketConnection
+  serviceConnection
 
-  loading = false
-  connection
-  simulation
-  index = 0
-
-  constructor(private socketService: SocketService) { }
-
-  ngOnInit() {
-    let layout = {
-      margin: { l: 20, r: 10, b: 20, t: 10 },
-      xaxis: {range: [0, 1]},
-      yaxis: {range: [0, 1]}
-    }
-    Plotly.newPlot("animation", [], layout)
-  }
-
-  ngOnDestroy(){
-    if(this.connection){
-      this.connection.unsubscribe()
-    }
-  }
+  constructor(
+    private socketService: SocketService,
+    private simSer: DiffusionSimulationService
+  ) { 
+    this.serviceConnection = this.simSer.getSim.subscribe(() => {
+      this.getSimulation()
+    })
+   }
 
   getSimulation(){
-    this.loading = true
-    this.connection = this.socketService.getSim("diffusion simulation", { test: "test" }).subscribe((info) => {  
-      this.loading = false
-      this.index = 0
-      this.simulation = info
-      this.connection.unsubscribe()
-      this.animate()
+    this.simSer.loading = true
+    this.socketConnection = this.socketService.getSim("diffusion simulation", { heatmap: this.simSer.heatmap, sources: this.simSer.sources }).subscribe((info) => {  
+      this.simSer.loading = false
+      this.simSer.index = 0
+      this.simSer.simulation = info
+      this.socketConnection.unsubscribe()
+      this.simSer.onReset()
     })
   }
 
-  animate(){
-    let layout = {
-      margin: { l: 20, r: 10, b: 20, t: 10 },
-      xaxis: {range: [this.simulation.x[0], this.simulation.x[this.simulation.x.length - 1]]},
-      yaxis: {range: [this.simulation.y[0], this.simulation.y[this.simulation.y.length - 1]]},
-    }
+  ngOnInit() {
 
-    let data = [{
-      x: this.simulation.x,
-      y: this.simulation.y,
-      z: this.simulation.ut[this.index],
-      type: 'contour',
-      colorscale: 'Jet',
-    }]
-
-    this.draw(layout, data)
   }
-  draw(layout, data){
-    if(this.index >= this.simulation.ut.length){
-      return
+  
+  ngOnDestroy(){
+    this.simSer.animating = false
+    this.simSer.simulation = null
+    this.serviceConnection.unsubscribe()
+    if(this.socketConnection){
+      this.socketConnection.unsubscribe()
     }
-    Plotly.newPlot('animation', data, layout)
-    this.index++
-    setTimeout(() => {
-      this.animate()
-    }, 50)
-
   }
 }
-

@@ -8,20 +8,22 @@ def Gaussian(x,alpha,x0,p0,gamma0):
   return N*np.exp(-alpha*(x-x0)**2+1j*p0*(x-x0)+1j*gamma0)    
 
 def Barrier(x,V0,L):
-  if(0 <= x <= L):
+  if(-L/2.0 <= x <= L/2.0):
     return V0
   return 0
 
-V0 = 5 #Strength of barrier
-L  = 1  #Size of barrier
-p0 = 7
-x0 = -4
-alpha = 0.7
+message = json.loads(sys.argv[1])
+V0 = message["V"] #Strength of barrier
+L  = message["L"] #Size of barrier
+p0 = message["p"]
+x0 = message["x"]
+alpha = message["alpha"]
+
 Lx = 20
-T = 3.5 # How long to run simulation
+T =  1 # How long to run simulation
 Ngrid = 200
 
-dt = 0.5e-2 # The time step
+dt = 1e-4 # The time step
 
 x = np.linspace(-Lx,Lx,Ngrid+1)
 dx = x[1]-x[0]

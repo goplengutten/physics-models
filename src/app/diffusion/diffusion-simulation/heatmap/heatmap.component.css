@@ -1,0 +1,13 @@
+table, td, th {
+  margin: 0;
+  padding: 0;
+}
+#table{
+  cursor: pointer;
+}
+.cell{
+  width: 10px;
+  height: 10px;
+  border: solid 1px rgba(200,200,0,0);
+  background-color: #00FFFF;
+}

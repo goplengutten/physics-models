@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as Plotly from 'plotly.js';
 
 @Component({
@@ -6,9 +6,9 @@ import * as Plotly from 'plotly.js';
   templateUrl: './ising-simulation.component.html',
   styleUrls: ['./ising-simulation.component.css']
 })
-export class IsingSimulationComponent implements OnInit {
+export class IsingSimulationComponent implements OnInit, OnDestroy {
 
-  simulating = false
+  animating = false
 
   constructor() { }
 
@@ -47,9 +47,12 @@ export class IsingSimulationComponent implements OnInit {
   avgM
   avgE
 
- 
   ngOnInit(){
     this.initialize()
+  }
+
+  ngOnDestroy(){
+    this.animating = false
   }
 
   //function for periodic boundary conditions
@@ -85,12 +88,12 @@ export class IsingSimulationComponent implements OnInit {
   }
 
   start(){
-    this.simulating = true
+    this.animating = true
     this.animate()
   }
 
   stop(){
-    this.simulating = false
+    this.animating = false
   }
 
   initialize(){ 
@@ -133,7 +136,7 @@ export class IsingSimulationComponent implements OnInit {
 
 
     setTimeout(() => {
-      if(this.simulating){
+      if(this.animating){
         this.animate()
       }
     }, this.time)
@@ -149,7 +152,9 @@ export class IsingSimulationComponent implements OnInit {
       z: this.spin_matrix,
       type: 'heatmap',
       showscale: false,
-      colorscale: "YlOrRd"
+      colorscale: "YlOrRd",
+      zmin: -1,
+      zmax: 1
     }]
     this.counter++
     Plotly.newPlot('animation', data, layout)

@@ -30,6 +30,9 @@ import { EigenfunctionsSimulation2dComponent } from './quantum/eigenfunctions/ei
 import { TunnelingComponent } from './quantum/tunneling/tunneling.component';
 import { TunnelingInfoComponent } from './quantum/tunneling/tunneling-info/tunneling-info.component';
 import { TunnelingSimulationComponent } from './quantum/tunneling/tunneling-simulation/tunneling-simulation.component';
+import { HeatmapComponent } from './diffusion/diffusion-simulation/heatmap/heatmap.component';
+import { DiffusionControllersComponent } from './diffusion/diffusion-simulation/diffusion-controllers/diffusion-controllers.component';
+import { DiffusionAnimationComponent } from './diffusion/diffusion-simulation/diffusion-animation/diffusion-animation.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -104,6 +107,9 @@ const appRoutes: Routes = [
     TunnelingComponent,
     TunnelingInfoComponent,
     TunnelingSimulationComponent,
+    HeatmapComponent,
+    DiffusionControllersComponent,
+    DiffusionAnimationComponent,
   ],
   imports: [
     BrowserModule,

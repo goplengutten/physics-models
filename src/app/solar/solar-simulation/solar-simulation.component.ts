@@ -18,7 +18,6 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
   planets
   frames = []
 
-
   constructor(private socketService: SocketService) { }
 
   ngOnInit() {
@@ -63,6 +62,8 @@ export class SolarSimulationComponent implements OnInit, OnDestroy {
     this.connection = this.socketService.getSim("solar simulation", chosenPlanets).subscribe((info) => {  
       this.loading = false
       this.simulation = info
+
+      
       this.connection.unsubscribe()
       this.animation()
     })
