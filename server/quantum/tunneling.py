@@ -19,11 +19,11 @@ p0 = message["p"]
 x0 = message["x"]
 alpha = message["alpha"]
 
-Lx = 20
-T =  1 # How long to run simulation
-Ngrid = 200
+Lx = 10
+T =  2.5 # How long to run simulation
+Ngrid = 250
 
-dt = 1e-4 # The time step
+dt = 1e-2 # The time step
 
 x = np.linspace(-Lx,Lx,Ngrid+1)
 dx = x[1]-x[0]

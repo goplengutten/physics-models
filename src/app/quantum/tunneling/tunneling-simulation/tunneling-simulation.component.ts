@@ -42,28 +42,28 @@ export class TunnelingSimulationComponent implements OnInit {
     this.V -= this.V > 10 ? 5 : 0
   }
   onpUp(){
-    this.p += this.p < 20 ? 0.5 : 0
-    this.p = this.p > 20 ? 20 : this.p
+    this.p += this.p < 15 ? 0.5 : 0
+    this.p = this.p > 15 ? 15 : this.p
   }
   onpDown(){
-    this.p -= this.p > 0 ? 0.5 : 0
-    this.p = this.p < 0 ? 0 : this.p
+    this.p -= this.p > -15 ? 0.5 : 0
+    this.p = this.p < -15 ? -15 : this.p
   }
   onLUp(){
-    this.L += this.L < 5 ? 0.2 : 0
-    this.L = this.L > 5 ? 5 : this.L
+    this.L += this.L < 3 ? 0.2 : 0
+    this.L = this.L > 3 ? 3 : this.L
   }
   onLDown(){
     this.L -= this.L > 0.2 ? 0.2 : 0
     this.L = this.L < 0.2 ? 0.2 : this.L
   }
   onxUp(){
-    this.x += this.x < 10 ? 0.5 : 0
-    this.x = this.x > 10 ? 10 : this.x
+    this.x += this.x < 7 ? 0.5 : 0
+    this.x = this.x > 7 ? 7 : this.x
   }
   onxDown(){
-    this.x -= this.x > -10 ? 0.5 : 0
-    this.x = this.x < -10 ? -10 : this.x
+    this.x -= this.x > -7 ? 0.5 : 0
+    this.x = this.x < -7 ? -7 : this.x
   }
   onalphaUp(){
     this.alpha += this.alpha < 2 ? 0.1 : 0
