@@ -6,7 +6,7 @@ import { Subject } from "rxjs/Subject"
 @Injectable()
 export class SocketService {
 
-  private url = ""
+  private url = "http://localhost:3000"
 
   getSim(type: string, params: object){
     let simulation = ""
