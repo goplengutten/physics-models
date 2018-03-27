@@ -8,21 +8,16 @@ export class SocketService {
 
 
   getSim(type: string, params: object){
-    let simulation = ""
 
     let stringified = JSON.stringify(params)
-    
+
     let observable = new Observable(observer => {
       let socket = io()
 
-      
       socket.emit(type, stringified)
 
       socket.on("streaming info", (data) => {
-        simulation += data
-      })
-      socket.on("complete", () => {
-        simulation = JSON.parse(simulation)
+        let simulation = JSON.parse(data)
         observer.next(simulation)
       })
       return () => { socket.disconnect() }

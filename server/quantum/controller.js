@@ -7,6 +7,7 @@ module.exports.simulateSystem = function(socket, message){
 
   message = JSON.parse(message)
 
+
   if(message.simulationType === "1dEigenfunctions"){
     let params = {
       potential: message.potential,
@@ -33,9 +34,11 @@ module.exports.simulateSystem = function(socket, message){
 
   }
 
+  let bufferString = ""
+
   system.stdout.setEncoding("utf-8")
   system.stdout.on("data", (data) => {
-    socket.emit("streaming info", data)
+    bufferString += data
   })
 
   system.stderr.on("data", (data) => {
@@ -43,6 +46,6 @@ module.exports.simulateSystem = function(socket, message){
   })
 
   system.on("close", (code) => {
-    socket.emit("complete")
+    socket.emit("streaming info", bufferString)
   })
 }

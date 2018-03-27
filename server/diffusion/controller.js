@@ -5,9 +5,11 @@ module.exports.simulateSystem = function(socket, info){
   
   const simulation = spawn("python", ["server/diffusion/diffusion_equation.py"])
 
+  let bufferString =""
+
   simulation.stdout.setEncoding("utf-8")
   simulation.stdout.on("data", (data) => {
-    socket.emit("streaming info", data)
+    bufferString += data
   })
 
   simulation.stderr.on("data", (data) => {
@@ -16,7 +18,7 @@ module.exports.simulateSystem = function(socket, info){
 
   simulation.on("close", (code) => {
     console.log("complete")
-    socket.emit("complete")
+    socket.emit("streaming info", bufferString)
   })
 
   simulation.stdin.setEncoding("utf-8")

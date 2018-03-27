@@ -5,9 +5,11 @@ module.exports.simulateSystem = function(socket, planets){
   
   const simulation = spawn("python", ["server/solar/solar_system.py", planets])
   
+  let bufferString = "" 
+
   simulation.stdout.setEncoding("utf-8")
   simulation.stdout.on("data", (data) => {
-    socket.emit("streaming info", data)
+    bufferString += data
   })
 
   simulation.stderr.on("data", (data) => {
@@ -15,7 +17,8 @@ module.exports.simulateSystem = function(socket, planets){
   })
 
   simulation.on("close", (code) => {
-    socket.emit("complete")
+    console.log("closed")
+    socket.emit("streaming info", bufferString)
   })
 }
 
