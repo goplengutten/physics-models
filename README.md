@@ -1,27 +1,53 @@
 # FunWithPhysics
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+Simulations of interesting physics problems. Tweek the parameters and watch how it affects the systems.
 
-## Development server
+## Getting Started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+These instructions will get you a copy of the project up and running on your local machine.
 
-## Code scaffolding
+### Prerequisites
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You will need nodeJS, mongoDB and angular installed on your computer.
 
-## Build
+Go to the links below and follow the instructions
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+* [NodeJS](https://nodejs.org/en/)
+* [MongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
 
-## Running unit tests
+Then open your command prompt and type the following instruction:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+> npm install -g @angular/cli
+```
 
-## Running end-to-end tests
+### Installing and running the project
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Clone the repository and run
+```
+> npm install
 
-## Further help
+> ng build
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+> ng serve
+```
+
+Open a new command prompt and run
+
+```
+> node server.js
+```
+
+Go to localhost:3000 in your browser.
+
+
+
+## TODO-list
+This is a work in progress. Here is a list of the things to come.
+
+* Add more problems
+* Brush up the design
+
+## Author
+* **Stian Goplen**
+* **Håkon Emil Kristiansen**
